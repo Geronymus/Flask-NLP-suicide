@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Flask App - Tabs</title>
+        <style>
+
+            body {
+                background-image: url("{{ url_for('static', filename='reddit_fondo_3.png') }}");
+                background-size: cover; /* Ajusta el tamaño de la imagen al contenedor */
+                /* Otros estilos para tu página */
+                background-repeat: repeat;
+                font-family: Arial, sans-serif;
+                /* ... */
+            }   
+            .container {
+                text-align: center;
+                color: #999999;
+                z-index: 1;
+                position: relative;
+                padding: 20px;
+                border-radius: 10px;
+                background-color: rgba(0, 0, 0, 0.6);
+                backdrop-filter: blur(5px);
+            }
+            /* Estilos para el contenido de la página */
+            .content {
+                /* Estilos específicos para el contenido */
+                color: white;
+                /* ... */
+            }
+            .tab-content {
+                display: none;
+                padding: 20px 0;
+            }
+            .tab-content.active {
+                display: block;
+            }
+            
+            .tab-buttons {
+                margin-bottom: 20px;
+            }
+
+            .tab-buttons button {
+                padding: 10px 20px;
+                margin: 0 5px;
+                border: none;
+                border-radius: 5px;
+                background-color: #e99d10;
+                color: #ffffff;
+                cursor: pointer;
+            }
+        </style>
+    </head>
+    <body>
+
+     <div class="container">
+        <h1>Suicide Prediction with negative emotions</h1>
+        <form action="/" method="post">
+            <label for="user_text">Enter text:</label><br>
+            <input type="text" id="user_text" name="user_text"><br><br>
+            <input type="submit" value="Predict">
+        </form>
+        
+        <div>
+            {% if prediction_suicide %}
+                <h2>Prediction Result for Suicide</h2>
+                <p>The predicted class is: {{ prediction_suicide }}</p>
+            {% endif %}
+        </div>
+
+        {% if prediction_suicide == "Comentario suicida" %}
+            <div>
+                {% if prediction_emotion %}
+                    <h2>Prediction Result for Emotion</h2>
+                    <p>The predicted class is: {{ prediction_emotion }}</p>
+                {% endif %}
+            </div>
+        {% endif %}
+        
+
+
+
+        <h1>Word Clouds</h1>
+        <div class="tab-buttons">
+            <button onclick="openTab('tab2')">Suicide</button>
+            <button onclick="openTab('tab3')">Non Suicide</button>
+            <button onclick="openTab('tab4')">Sadness</button>
+            <button onclick="openTab('tab5')">Fear</button>
+            <button onclick="openTab('tab6')">Anger</button>
+        </div>
+
+        <div id="tab2" class="tab-content">
+            <!-- Contenido para la imagen 1 -->
+            <h2>Suicide</h2>
+            <img src="{{ url_for('static', filename='Word_Cloud_Suicide.png') }}" alt="Image 1">
+        </div>
+
+        <div id="tab3" class="tab-content">
+            <!-- Contenido para la imagen 1 -->
+            <h2>Non Suicide</h2>
+            <img src="{{ url_for('static', filename='Word_Cloud_Non_Suicide.png') }}" alt="Image 2">
+        </div>
+
+        <div id="tab4" class="tab-content">
+            <!-- Contenido para la imagen 1 -->
+            <h2>Sadness</h2>
+            <img src="{{ url_for('static', filename='Word_Cloud_Sadness.png') }}" alt="Image 3">
+        </div>
+
+        <div id="tab5" class="tab-content">
+            <!-- Contenido para la imagen 1 -->
+            <h2>Fear</h2>
+            <img src="{{ url_for('static', filename='Word_Cloud_Fear.png') }}" alt="Image 4">
+        </div>
+
+        <div id="tab6" class="tab-content">
+            <!-- Contenido para la imagen 1 -->
+            <h2>Anger</h2>
+            <img src="{{ url_for('static', filename='Word_Cloud_Anger.png') }}" alt="Image 5">
+        </div>
+      </div>
+    <script>
+        function openTab(tabName) {
+            var i, tabcontent;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            document.getElementById(tabName).style.display = "block";
+        }
+    </script>
+
+</body>
+</html>
